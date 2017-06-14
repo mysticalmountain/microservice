@@ -1,0 +1,15 @@
+2017-06-13 09:32:03 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 14:49:49 [ Thread-4:19065504 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 14:50:04 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 14:54:41 [ Thread-4:276543 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 14:56:36 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 14:59:18 [ Thread-4:162384 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 14:59:46 [ main:1 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 15:01:08 [ Thread-4:82610 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 15:01:57 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 15:02:51 [ Thread-4:53951 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 15:08:20 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 15:09:14 [ Thread-4:53805 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 15:09:28 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-13 15:10:33 [ Thread-4:64213 ] - [ INFO ] {dataSource-1} closed
+2017-06-13 19:46:06 [ main:0 ] - [ INFO ] {dataSource-1} inited

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户查询</title>
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/bootstrap/extend/css/util.css">
+    <script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>
+    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+    <script src="/resources/c/permission/new.js"></script>
+</head>
+
+
+<body>
+<nav id="navbar" class="navbar navbar-default" role="navigation">
+</nav>
+<ol class="breadcrumb">
+    <li>系统管理</a></li>
+    <li><a href="list.html">权限管理</a></li>
+    <li class="active">新建权限</li>
+</ol>
+<div id="success" class="alert alert-success" style="display: none;"></div>
+<div id="fail" class="alert alert-danger" style="display: none;"></div>
+<div id="loading" class="loading" style="display: none;">Loading pages...</div>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>资源ID</th>
+        <th>服务ID</th>
+        <th>资源代码</th>
+        <th>资源名称</th>
+        <th><input id="checkAll" type="checkbox" /></th>
+    </tr>
+    </thead>
+    <tbody id="services">
+    </tbody>
+</table>
+<div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+        <button id="save" type="button" class="btn btn-default">保存</button>
+    </div>
+</div>
+<div id="footer"></div>
+</body>
+</html>

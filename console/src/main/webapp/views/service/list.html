@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>服务查询</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../../resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../..//resources/bootstrap/css/bootstrap.min.css">
+    <!--<script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>-->
+    <!--<script src="/resources/bootstrap/js/bootstrap.min.js"></script>-->
+    <!--<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+
+    <header id="header" class="main-header"></header>
+    <aside id="sidebar" class="main-sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                &nbsp;
+                <small>&nbsp;</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
+                <li><a href="#">服务管理</a></li>
+                <li class="active">服务列表</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+
+                <div class="box">
+                    <div class="box-header">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <input type="text" id="code" class="form-control" placeholder="服务代码">
+                            </div>
+                            <div class="col-xs-3">
+                                <select id="method" class="form-control">
+                                    <option value="">Method</option>
+                                    <option value="GET">GET</option>
+                                    <option value="POST">POST</option>
+                                    <option value="DELETE">DELETE</option>
+                                    <option value="PUT">PUT</option>
+                                    <option value="PATCH">PATCH</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <select id="isAudit" class="form-control">
+                                    <option value="">是否审核</option>
+                                    <option value="1">是</option>
+                                    <option value="0">否</option>
+                                </select>
+                            </div>
+                            <div class="input-group-btn">
+                                <button id="search" type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>代码</th>
+                                <th>描述</th>
+                                <th>URI</th>
+                                <th>Method</th>
+                                <th>审核</th>
+                                <th style="width: 40px">Label</th>
+                            </tr>
+                            <tbody id="services">
+                        </table>
+                    </div>
+                    <div class="box-footer clearfix">
+                        <ul id="pages" class="pagination pagination-sm no-margin pull-right">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer id="footer" class="main-footer"></footer>
+</div>
+
+<script src="../../resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="../../resources/plugins/fastclick/fastclick.js"></script>
+<script src="../../resources/dist/js/app.min.js"></script>
+<script src="../../resources/c/service/list.js"></script>
+</body>
+</html>

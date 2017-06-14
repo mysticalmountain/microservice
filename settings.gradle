@@ -1,0 +1,27 @@
+rootProject.name = "microservice"
+include ":api"
+include	":api:api-core"
+include	":api:api-log"
+include ":core"
+include	":core:core-service"
+include	":core:core-log"
+include	":core:core-util"
+include	":core:core-validator"
+
+include ":support"
+include ":support:jpa"
+include ":support:redis"
+include ":support:session"
+include ":support:web"
+
+
+include ":service"
+include ":service:permission"
+include ":service:user"
+
+include ":server"
+include ":server:discovery"
+include ":server:gateway"
+include ":server:config"
+
+include ":console"

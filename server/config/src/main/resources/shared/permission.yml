@@ -1,0 +1,30 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/microservice?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: developer
+    password: developer
+    max-active: 200
+    min-idle: 10
+    initial-size: 10
+    validation-query: select 1 from dual
+    test-while-idle: true
+    time-between-eviction-runs-millis: 60000
+    min-evictable-idle-time-millis: 1800000
+    max-wait: 10000
+
+jpa:
+  database: MYSQL
+  hibernate:
+    ddl-auto: create-drop
+  showSql: false
+  generateDdl: true
+  properties:
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+
+jpa.entity.package: com.andx.micro.permission.model,com.andx.micro.core.idempotent.model
+
+session.filter.enable: false

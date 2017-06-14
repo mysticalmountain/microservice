@@ -1,0 +1,20 @@
+dependencies {
+    compile project(":support:web")
+}
+
+build {
+    doLast {
+        sourceSets*.java.srcDirs*.each { it.mkdirs() }
+        sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+    }
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.andx.micro.console.WebApp',
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+}
+

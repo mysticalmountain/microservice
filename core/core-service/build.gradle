@@ -1,0 +1,6 @@
+dependencies {
+    compile project(":core:core-log")
+    compile project(":api:api-core")
+    compile ("org.springframework:spring-context:${springVersion}")
+    compile ("org.springframework:spring-tx:${springVersion}")
+}

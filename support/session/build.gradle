@@ -1,0 +1,5 @@
+dependencies {
+    compile ("org.springframework.session:spring-session:1.3.0.RELEASE")
+//    compile ("org.springframework:tx:${springVersion}")
+    compile ("org.springframework:spring-jdbc:4.2.0.RELEASE")
+}

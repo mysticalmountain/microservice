@@ -1,0 +1,9 @@
+dependencies {
+    compile project(":core:core-log")
+    compile project(":api:api-core")
+    compile project(":core:core-util")
+    compile project(":core:core-service")
+    compile ("org.springframework:spring-webmvc:${springVersion}")
+    compile ("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compile ("com.alibaba:fastjson:1.2.17")
+}

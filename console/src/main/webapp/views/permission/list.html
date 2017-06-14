@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户查询</title>
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/bootstrap/extend/css/util.css">
+    <script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>
+    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+    <script src="/resources/c/permission/list.js"></script>
+</head>
+
+
+<body>
+<nav id="navbar" class="navbar navbar-default" role="navigation">
+</nav>
+<ol class="breadcrumb">
+    <li>系统管理</a></li>
+    <li class="active">权限管理</a></li>
+    <li>权限列表</li>
+</ol>
+<div id="success" class="alert alert-success" style="display: none;"></div>
+<div id="fail" class="alert alert-danger" style="display: none;"></div>
+<div id="loading" class="loading" style="display: none;">Loading pages...</div>
+<button id="new" type="button" class="btn btn-default" style="float: right">新建</button>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>权限ID</th>
+        <th>资源ID</th>
+        <th>资源名称</th>
+        <th>URI</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody id="permissions">
+    </tbody>
+</table>
+<div id="footer"></div>
+</body>
+</html>

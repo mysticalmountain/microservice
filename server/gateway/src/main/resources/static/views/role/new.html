@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>新建角色</title>
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/bootstrap/extend/css/util.css">
+    <script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>
+    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/resources/c/role/new.js"></script>
+</head>
+<body>
+<nav id="navbar" class="navbar navbar-default" role="navigation">
+</nav>
+<ol class="breadcrumb">
+    <li>系统管理</a></li>
+    <li><a href="list.html">角色管理</a></a></li>
+    <li class="active">新建角色</li>
+</ol>
+<div id="success" class="alert alert-success" style="display: none;"></div>
+<div id="fail" class="alert alert-danger" style="display: none;"></div>
+<div id="loading" class="loading" style="display: none;">Loading pages...</div>
+<form class="form-horizontal" role="form">
+    <fieldset>
+        <legend>角色信息</legend>
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="name">
+            </div>
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>服务信息</legend>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><input id="checkAll" type="checkbox" /></th>
+                    <th>代码</th>
+                    <th>名称</th>
+                    <th>系统</th>
+                    <th>模块</th>
+                </tr>
+                </thead>
+                <tbody id="services">
+                </tbody>
+            </table>
+    </fieldset>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="save" type="button" class="btn btn-default">保存</button>
+        </div>
+    </div>
+</form>
+<div id="footer"></div>
+</body>
+</html>

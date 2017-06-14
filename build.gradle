@@ -1,0 +1,52 @@
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'maven'
+
+    group = 'com.andx.microservice'
+    version = '1.0'
+
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    buildscript {
+        ext {
+            springBootVersion = '1.4.5.RELEASE'
+            springVersion = '4.2.5.RELEASE'
+            springEurekaVersion = '1.2.0.RELEASE'
+            springCloudVersion = '1.2.0.RELEASE'
+        }
+    }
+    task listJars {
+        doLast {
+            configurations.compile.each { File file -> println file.name }
+        }
+    }
+    task copyJars(type: Copy) {
+        from configurations.runtime
+        into 'build/libs'
+    }
+    build {
+        doLast {
+            copy {
+                from configurations.runtime
+                into 'build/libs'
+            }
+            copy {
+                from 'server.sh'
+                into 'build'
+            }
+            def logDir = new File(project.getProjectDir().getAbsolutePath() + "/build/logs")
+            if (!logDir.exists()) {
+                logDir.mkdirs()
+            }
+        }
+    }
+
+}
