@@ -8,28 +8,29 @@ import com.andx.micro.core.log.log4j.Log4jLog;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Null;
+import java.util.Map;
 
 /**
  * Created by andongxu on 17-4-13.
  */
-public abstract class DeleteSampleService<O extends Response> implements SampleService<Null, O> {
+public abstract class DeleteSampleService<O extends Response> implements SampleService<Map<String, String>, O> {
 
     private Log log = Log4jLog.getLog(this.getClass());
 
     @Override
     @Transactional
-    public O process(Null n, Object... args) throws ServiceException {
+    public O process(Map<String, String> n, Object... args) throws ServiceException {
         try {
             String path = (String) args[1];
-            return doService(path);
+            return doService(n, path);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return handlerException(null, e, args);
+            return handlerException(n, e, args);
         }
     }
 
     @Override
-    public O handlerException(Null n, Exception e, Object... args) {
+    public O handlerException(Map<String, String> n, Exception e, Object... args) {
         return doHandleException(e, (String) args[1]);
     }
 
@@ -37,5 +38,5 @@ public abstract class DeleteSampleService<O extends Response> implements SampleS
         return (O) new Response(e.getMessage(), false);
     }
 
-    protected abstract O doService(String path) throws ServiceException;
+    protected abstract O doService(Map<String, String> prams, String path) throws ServiceException;
 }

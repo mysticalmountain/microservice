@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Created by andongxu on 17-4-19.
  */
-public abstract class PatchSampleService<I extends Request, O extends Response> implements SampleService<I, O> {
+public abstract class PutSampleService<I extends Request, O extends Response> implements SampleService<I, O> {
 
     private Log log = Slf4jLogFactory.getLogFactory().getLog(this.getClass());
 

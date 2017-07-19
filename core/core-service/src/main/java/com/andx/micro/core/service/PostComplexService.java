@@ -8,6 +8,7 @@ import com.andx.micro.api.core.module.service.ServiceException;
 import com.andx.micro.api.core.module.service.handler.ServiceHandler;
 import com.andx.micro.api.log.Log;
 import com.andx.micro.core.log.slf4j.Slf4jLogFactory;
+import com.andx.micro.core.util.Constant;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Method;
@@ -35,10 +36,9 @@ public abstract class PostComplexService<I, O> implements ComplexService<I, O> {
     @Transactional
     public O process(I i, Object... args) throws ServiceException {
         ServiceContext context = new GenericServiceContext(i, this.getClass().getAnnotation(Service.class));
-        context.setAttribute("httpServletRequest", args[0]);
+        context.setAttribute(Constant.KEY_HTTP_SERVLET_REQUEST, args[0]);
+        context.setAttribute(Constant.KEY_PRAMS, i);
         try {
-//            Method targetMethod = this.getClass().getMethod(String.valueOf(args[args.length - 1]), ServiceContext.class);
-//            return (O) targetMethod.invoke(i, context);
             return this.doService(i, context);
         } catch (Exception e) {
             log.error(e.getMessage(), e);

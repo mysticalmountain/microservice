@@ -8,17 +8,21 @@ import com.andx.micro.api.core.dto.Response;
  */
 public class Constant {
 
-    public static String CODE_SUCCESS = "000000";
-    public static String CODE_UNKNOWN = "999999";
+    public static final String CODE_SUCCESS = "000000";
+    public static final String CODE_UNKNOWN = "999999";
 
-    public static String MSG_SUCCESS = "success";
-    public static String MSG_FAIL = "fail";
-    public static String MSG_UNKNOWN = "unknown error";
+    public static final String MSG_SUCCESS = "success";
+    public static final String MSG_FAIL = "fail";
+    public static final String MSG_UNKNOWN = "unknown error";
 
     public static Response RESPONSE_SUCCESS = new Response(CODE_SUCCESS, MSG_SUCCESS, true);
     public static Response RESPONSE_FAIL = new Response(CODE_UNKNOWN, MSG_UNKNOWN, false);
 
-
+    public static final String KEY_REQUEST_ID = "requestId";
+    public static final String KEY_EXECUTE_ID = "executeId";
+    public static final String KEY_CHANNEL_ID = "channelId";
+    public static final String KEY_HTTP_SERVLET_REQUEST = "httpServletRequest";
+    public static final String KEY_PRAMS = "prams";
 
 
 }

@@ -29,7 +29,7 @@ public class DataValidatorProcessor implements ValidatorProcessor<Request, Respo
             errors.add(error);
         }
         Response response = new Response();
-        response.setServiceId(request.getServiceId());
+//        response.setServiceId(request.getServiceId());
         response.setRequestId(request.getRequestId());
         if (errors.size() > 0) {
             response.setSuccess(false);
