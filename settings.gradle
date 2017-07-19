@@ -18,6 +18,7 @@ include ":support:web"
 include ":service"
 include ":service:permission"
 include ":service:user"
+include ":service:management"
 
 include ":server"
 include ":server:discovery"
