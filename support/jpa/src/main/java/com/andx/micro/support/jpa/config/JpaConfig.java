@@ -90,7 +90,10 @@ public class JpaConfig {
 
     private String[] getEntityPackage() {
         String packages = env.getProperty("jpa.entity.package", String.class);
-        return packages.split(",");
+        if (packages != null) {
+            return packages.split(",");
+        }
+        return new String[0];
     }
 
 }

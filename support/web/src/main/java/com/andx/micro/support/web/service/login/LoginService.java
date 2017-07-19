@@ -9,6 +9,7 @@ import com.andx.micro.api.core.module.service.ServiceException;
 import com.andx.micro.api.core.module.service.handler.HandlerException;
 import com.andx.micro.api.core.module.service.handler.ServiceHandler;
 import com.andx.micro.core.service.PostComplexService;
+import com.andx.micro.core.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -29,11 +30,11 @@ public class LoginService extends PostComplexService<Request<LoginDto>, Response
     @Qualifier("usernamePasswordHandler")
     private ServiceHandler<LoginDto, String> usernamePasswordHandler;
     @Autowired(required = false)
-    @Qualifier("userProfileHandler")
-    private ServiceHandler<Long, List<Long>> userProfileHandler;
-
-    public LoginService() {
-    }
+    @Qualifier("getUserRoleHandler")
+    private ServiceHandler<Long, List<Long>> getUserRoleHandler;
+    @Autowired(required = false)
+    @Qualifier("getUserOrgHandler")
+    private ServiceHandler<Long, Long> getUserOrgHandler;
 
     @Override
     protected Response doService(Request<LoginDto> loginDtoRequest, ServiceContext context) throws ServiceException {
@@ -45,24 +46,21 @@ public class LoginService extends PostComplexService<Request<LoginDto>, Response
         LoginDto loginDto = (LoginDto) context.getServiceInputObj(Request.class).getData();
         try {
             String userId = usernamePasswordHandler.handle(loginDto, context);
-            if (userProfileHandler !=  null) {
-                List<Long> roleIds = userProfileHandler.handle(Long.valueOf(userId), null);
+            if (userId == null) {
+                return Constant.RESPONSE_FAIL.clone();
+            }
+            session.setAttribute("userId", Long.valueOf(userId));
+            if (getUserRoleHandler != null) {
+                List<Long> roleIds = getUserRoleHandler.handle(Long.valueOf(userId), context);
                 session.setAttribute("roleIds", roleIds);
             }
-            if (userId != null) {
-                session.setAttribute("userId", userId);
-                return new Response(true);
-            } else {
-                return new Response(false);
+            if (getUserOrgHandler != null) {
+                Long orgId = getUserOrgHandler.handle(Long.valueOf(userId), context);
+                session.setAttribute("orgId", orgId);
             }
+            return Constant.RESPONSE_SUCCESS.clone();
         } catch (HandlerException e) {
             throw new ServiceException(e.getMessage(), e);
         }
     }
-
-    public LoginService(ServiceHandler... handlers) {
-
-        Collections.addAll(serviceHandlers, handlers);
-    }
-
 }

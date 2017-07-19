@@ -22,10 +22,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,51 +72,59 @@ public class GenericRequestExecute implements RequestExecute {
         HttpServletRequest httpServletRequest = (HttpServletRequest) args[0];
         String method = (String) args[1];
         String path = (String) args[2];
-        for (final ComplexService complexService : complexServices) {
-            Service service = getService(complexService);
-            if (this.isMatch(service, path) && method.equals(service.method().name())) {
-                if (MethodType.GET.equals(service.method())) {
-                    Map<String, String[]> params = (Map<String, String[]>) args[3];
-                    Response response = (Response) getExecuteComplex.execute(params, complexService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.POST.equals(service.method())) {
-                    String requestData = (String) args[3];
-                    Request request = this.json2Request(requestData, complexService);
-                    Response response = (Response) postExecuteComplex.execute(request, complexService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.DELETE.equals(service.method())) {
-                    Response response = (Response) deleteExecuteComplex.execute(null, complexService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.PUT.equals(service.method()) || "PATCH".equals(service.method())) {
-                    String requestData = (String) args[3];
-                    Request request = this.json2Request(requestData, complexService);
-                    Response response = (Response) patchExecuteComplex.execute(request, complexService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
+        if (complexServices != null) {
+            for (final ComplexService complexService : complexServices) {
+                Service service = getService(complexService);
+                if (this.isMatch(service, path) && method.equals(service.method().name())) {
+                    if (MethodType.GET.equals(service.method())) {
+                        Map<String, String[]> params = (Map<String, String[]>) args[3];
+                        Map<String, String> target = convertParams(params);
+                        Response response = (Response) getExecuteComplex.execute(target, complexService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.POST.equals(service.method())) {
+                        String requestData = (String) args[3];
+                        Request request = this.json2Request(requestData, complexService);
+                        Response response = (Response) postExecuteComplex.execute(request, complexService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.DELETE.equals(service.method())) {
+                        Map<String, String[]> params = (Map<String, String[]>) args[3];
+                        Map<String, String> target = convertParams(params);
+                        Response response = (Response) deleteExecuteComplex.execute(target, complexService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.PUT.equals(service.method()) || MethodType.PATCH.equals(service.method())) {
+                        String requestData = (String) args[3];
+                        Request request = this.json2Request(requestData, complexService);
+                        Response response = (Response) patchExecuteComplex.execute(request, complexService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    }
                 }
             }
         }
-
-        for (final SampleService sampleService : sampleServices) {
-            Service service = getService(sampleService);
-            if (isMatch(service, path) && method.equals(service.method().name())) {
-                if (MethodType.GET.equals(service.method())) {
-                    Map<String, String[]> params = (Map<String, String[]>) args[3];
-                    params.put("path", new String[]{path});
-                    Response response = (Response) getExecuteSample.execute(params, sampleService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.POST.equals(service.method())) {
-                    String requestData = (String) args[3];
-                    Request request = json2Request(requestData, sampleService);
-                    Response response = (Response) postExecuteSample.execute(request, sampleService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.DELETE.equals(service.method())) {
-                    Response response = (Response) deleteExecuteSample.execute(null, sampleService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
-                } else if (MethodType.PUT.equals(service.method()) || MethodType.PATCH.equals(service.method())) {
-                    String requestData = (String) args[3];
-                    Request request = json2Request(requestData, sampleService);
-                    Response response = (Response) patchExecuteSample.execute(request, sampleService, httpServletRequest, path);
-                    return JSON.toJSONString(response);
+        if (sampleServices != null) {
+            for (final SampleService sampleService : sampleServices) {
+                Service service = getService(sampleService);
+                if (isMatch(service, path) && method.equals(service.method().name())) {
+                    if (MethodType.GET.equals(service.method())) {
+                        Map<String, String[]> params = (Map<String, String[]>) args[3];
+                        Map<String, String> target = convertParams(params);
+                        Response response = (Response) getExecuteSample.execute(target, sampleService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.POST.equals(service.method())) {
+                        String requestData = (String) args[3];
+                        Request request = json2Request(requestData, sampleService);
+                        Response response = (Response) postExecuteSample.execute(request, sampleService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.DELETE.equals(service.method())) {
+                        Map<String, String[]> params = (Map<String, String[]>) args[3];
+                        Map<String, String> target = convertParams(params);
+                        Response response = (Response) deleteExecuteSample.execute(target, sampleService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    } else if (MethodType.PUT.equals(service.method()) || MethodType.PATCH.equals(service.method())) {
+                        String requestData = (String) args[3];
+                        Request request = json2Request(requestData, sampleService);
+                        Response response = (Response) patchExecuteSample.execute(request, sampleService, httpServletRequest, path);
+                        return JSON.toJSONString(response);
+                    }
                 }
             }
         }
@@ -139,7 +144,7 @@ public class GenericRequestExecute implements RequestExecute {
         Type type = ((ParameterizedType) superType.get()).getActualTypeArguments()[0];
         String sourceDate = null; //URLDecoder.decode(json, "utf-8");
         if (json.startsWith("%")) {
-            sourceDate = URLDecoder.decode(json, "utf-8");
+            sourceDate = URLDecoder.decode(json);
         } else {
             sourceDate = json;
         }
@@ -169,6 +174,29 @@ public class GenericRequestExecute implements RequestExecute {
             service = (Service) targetClass.getAnnotation(Service.class);
         }
         return service;
+    }
+
+    private Map<String, String> convertParams(Map<String, String []> source) {
+        Iterator<String> iterator = source.keySet().iterator();
+        Map<String, String> target = new HashMap<>();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            String[] vals = source.get(key);
+            if (vals.length > 1) {
+                String value = "";
+                for (String val : vals) {
+                    if (value.equals("")) {
+                        value += val;
+                    } else {
+                        value += "," + val;
+                    }
+                }
+                target.put(key, value);
+            } else {
+                target.put(key, vals[0]);
+            }
+        }
+        return target;
     }
 
 }
