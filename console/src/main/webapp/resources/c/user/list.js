@@ -1,19 +1,37 @@
 $(document).ready(function () {
     $.getScript("/resources/c/common/include.js");
 
+    var sessionOrgId = $.cookie("session_org_id");
+
     $("#new").click(function () {
         location.href = 'new.html';
     });
+    queryUsers(sessionOrgId);
 
-    var data = {};
-    var reqData = {
-        requestId: new Date().getTime()
+    var setting = {
+        check: {
+            enable: true,
+            chkStyle: "radio",
+            radioType: "all"
+        },
+        view: {
+            dblClickExpand: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                pIdKey: "pid"
+            }
+        },
+        callback: {
+            onClick: onClick,
+            onCheck: onCheck
+        }
     };
-    var dataJson = JSON.stringify(reqData);
-    $('#loading').show();
+
     $.ajax({
         type: "GET",
-        url: "http://www.micro.com/user/service/users",
+        url: "/management/service/user/orgs",
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
         },
@@ -21,7 +39,40 @@ $(document).ready(function () {
             withCredentials: true
         },
         crossDomain: true,
-        // data: dataJson,
+        dataType: 'json',
+        success: function (res) {
+            if (res.success == true) {
+                $.fn.zTree.init($("#treeDemo"), setting, res.data);
+            }
+        }
+    });
+
+    $("#orgName").click(function () {
+        var cityObj = $("#orgName");
+        var cityOffset = $("#orgName").offset();
+        $("#menuContent").css({left: cityOffset.left + "px", top: cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+        $("body").bind("mousedown", onBodyDown);
+    });
+
+    $("#search").click(function () {
+        var orgId = $("#orgId").val();
+        queryUsers(orgId);
+
+    });
+});
+
+
+function queryUsers(orgId) {
+    $.ajax({
+        type: "GET",
+        url: "/management/service/org/" + orgId + "/users",
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
+        },
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         dataType: 'json',
         success: function (data) {
             $("#success").hide();
@@ -30,6 +81,7 @@ $(document).ready(function () {
                 $("#fail").html(data.errorMessage);
                 $("#fail").show();
             } else {
+                $("#users").empty();
                 $.each(data.data, function (i, item) {
                     $("#users").append("<tr><td>" + item.id + "</td><td><a href='#' value='" + item.id + "'>" + item.name + "</a></td><td>" + item.username + "</td><td><button type='button' class='btn btn-default btn-sm' value='" + item.id + "'> <span class='glyphicon glyphicon-trash'></span> 删除 </button></td></tr>");
                 });
@@ -48,7 +100,7 @@ $(document).ready(function () {
                     $.ajax({
                         type: "DELETE",
                         contentType: "application/json",
-                        url: "http://www.micro.com/user/service/users/" + $(this).val(),
+                        url: "/management/service/user/" + $(this).val(),
                         // data: dataJson,
                         dataType: 'json',
                         success: function (data) {
@@ -76,6 +128,40 @@ $(document).ready(function () {
             }
         }
     });
-});
+}
 
+function onClick(e, treeId, treeNode) {
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    zTree.checkNode(treeNode, !treeNode.checked, null, true);
+    return false;
+}
+function onCheck(e, treeId, treeNode) {
+    var zTree = $.fn.zTree.getZTreeObj("treeDemo"),
+        nodes = zTree.getCheckedNodes(true),
+        v = "";
+    var pid = "";
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        v += nodes[i].name + ",";
+        pid += nodes[i].id;
+    }
+    if (v.length > 0) v = v.substring(0, v.length - 1);
+    $("#orgName").val(v)
+    $("#orgId").val(pid);
+}
 
+function showMenu() {
+    var cityObj = $("#orgName");
+    var cityOffset = $("#orgName").offset();
+    $("#menuContent").css({left: cityOffset.left + "px", top: cityOffset.top + cityObj.outerHeight() + "px"}).slideDown("fast");
+
+    $("body").bind("mousedown", onBodyDown);
+}
+function hideMenu() {
+    $("#menuContent").fadeOut("fast");
+    $("body").unbind("mousedown", onBodyDown);
+}
+function onBodyDown(event) {
+    if (!(event.target.id == "menuBtn" || event.target.id == "orgName" || event.target.id == "menuContent" || $(event.target).parents("#menuContent").length > 0)) {
+        hideMenu();
+    }
+}

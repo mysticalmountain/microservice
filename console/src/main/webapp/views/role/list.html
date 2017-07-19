@@ -2,37 +2,83 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>查询角色</title>
+    <title>用户查询</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/resources/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
     <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/bootstrap/extend/css/util.css">
-    <script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>
-    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
-    <script src="/resources/c/role/list.js"></script>
 </head>
-<body>
-<nav id="navbar" class="navbar navbar-default" role="navigation">
-</nav>
-<ol class="breadcrumb">
-    <li>系统管理</a></li>
-    <li>角色管理</a></li>
-    <li class="active">角色列表</li>
-</ol>
-<div id="success" class="alert alert-success" style="display: none;"></div>
-<div id="fail" class="alert alert-danger" style="display: none;"></div>
-<div id="loading" class="loading" style="display: none;">Loading pages...</div>
-<button id="new" type="button" class="btn btn-default" style="float: right">新建</button>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>序号</th>
-        <th>名称</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody id="roles">
-    </tbody>
-</table>
-<div id="footer"></div>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+
+    <header id="header" class="main-header"></header>
+    <aside id="sidebar" class="main-sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                &nbsp;
+                <small>&nbsp;</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
+                <li><a href="#">角色管理</a></li>
+                <li class="active">查询</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div class="row">
+                <div class="box">
+                    <div class="box-header with-border pull-right">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" id="orgName" placeholder="机构">
+                                <input type="hidden" class="form-control" id="orgId">
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="input-group-btn">
+                                    <button id="search" type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-2">
+                                <button id="new" type="button" class="btn btn-primary">新建</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>机构</th>
+                                <th>操作</th>
+                            </tr>
+                            <tbody id="roles"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+        <ul id="treeDemo" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+    </div>
+    <footer id="footer" class="main-footer"></footer>
+</div>
+
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/plugins/fastclick/fastclick.js"></script>
+<script src="/resources/dist/js/app.min.js"></script>
+<script src="/resources/c/role/list.js"></script>
+<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.excheck.js"></script>
 </body>
 </html>

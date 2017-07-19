@@ -16,7 +16,7 @@ $(document).ready(function () {
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "http://www.micro.com/user/service/login",
+            url: "/management/service/login",
             xhrFields: {
                 withCredentials: true
             },
@@ -29,6 +29,7 @@ $(document).ready(function () {
                 if (data.success == true) {
                     $("#success").html(data.errorMessage);
                     $("#success").show();
+                    location.href = 'list.html';
                 } else {
                     $("#fail").html(data.errorMessage);
                     $("#fail").show();

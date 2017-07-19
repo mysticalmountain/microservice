@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户查询</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+
+    <header id="header" class="main-header"></header>
+    <aside id="sidebar" class="main-sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                &nbsp;
+                <small>&nbsp;</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
+                <li><a href="#">菜单管理</a></li>
+                <li class="active">菜单列表</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div id="success" class="alert alert-success" style="display: none;"></div>
+            <div id="fail" class="alert alert-danger" style="display: none;"></div>
+            <div class="row">
+                <div class="box">
+                    <div class="content_wrap">
+                        <div class="box-header with-border ">
+                            <div class="col-xs-1 pull-right">
+                                <button id="delete" type="button" class="btn btn-primary">删除</button>
+                            </div>
+                            <div class="col-xs-1 pull-right">
+                                <button id="new" type="button" class="btn btn-primary">增加</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">菜单树</h3>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="menuTree" class="ztree"></div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">菜单数据</h3>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="col-sm-3">
+                                <label for="id">ID</label>
+                                <input type="text" class="form-control" id="id" disabled/>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="id">父ID</label>
+                                <input type="text" class="form-control" id="pid" disabled/>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="name">名称</label>
+                                <input type="text" class="form-control" id="name"/>
+                            </div>
+                            <div class="col-sm-3">
+                                <label for="od">顺序</label>
+                                <input type="text" class="form-control" id="od"/>
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="action">URL</label>
+                                <input type="text" class="form-control" id="action"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="box-footer">
+                                <button type="button" id="save" class="btn btn-primary center-block">保存</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <footer id="footer" class="main-footer"></footer>
+</div>
+
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/plugins/fastclick/fastclick.js"></script>
+<script src="/resources/dist/js/app.min.js"></script>
+<script src="/resources/c/menu/list.js"></script>
+<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.exedit.js"></script>
+</body>
+</html>

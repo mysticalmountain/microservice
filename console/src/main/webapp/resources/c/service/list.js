@@ -1,56 +1,11 @@
 $(document).ready(function () {
     $.getScript("/resources/c/common/include.js");
 
-    var data = {
-        requestId: new Date().getTime()
-    };
-    var dataJson = JSON.stringify(data);
+    path = window.document.location.href;
+    pos = path.lastIndexOf(":");
+    context = path.substring(0, pos);
 
-    queryServices(0, 5, null, null, null);
-    /*
-     $.ajax({
-     type: "GET",
-     url: "http://www.micro.com/permission/service/services?size=2",
-     beforeSend: function (xhr) {
-     xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
-     },
-     dataType: 'json',
-     success: function (data) {
-     $("#success").hide();
-     $("#fail").hide();
-     if (data.success == false) {
-     $("#fail").html(data.errorMessage);
-     $("#fail").show();
-     }
-     $("#services").empty();
-     $.each(data.data, function (i, item) {
-     $("#services").append("<tr>" +
-     "<td>" + item.id + "</td>" +
-     "<td>" + item.code + "</td>" +
-     "<td>" + item.content + "</td>" +
-     "<td>" + item.path + "</td>" +
-     "<td>" + item.method + "</td>" +
-     "<td>" + item.isAudit + "</td>" +
-     "<td></td>" +
-     "</tr>");
-     })
-     var begin = data.currentPage - 2;
-     var end = data.currentPage + 2;
-     if (begin > 0) {
-     $("#pages").append("<li><a name='pageNum' value = '" + (begin - 1) + "' href='#'>&laquo;</a></li>");
-     }
-     for (; begin <= end; begin++) {
-     if (begin >= 0) {
-     $("#pages").append("<li><a name='pageNum' value = '" + begin + "' href='#'>" + (begin + 1) + "</a></li>");
-     }
-     }
-     if (data.totalPages - end > 0) {
-     $("#pages").append("<li><a name='pageNum' value = '" + begin + "' href='#'>&raquo;</a></li>");
-     }
-     $("#loading").hide();
-     }
-     });
-     */
+    queryServices(0, 20, null, null, null);
 
     $("#checkAll").change(function () {
         if ($(this).attr('checked') == null) {
@@ -64,52 +19,17 @@ $(document).ready(function () {
 
 
     $("#search").click(function () {
-        queryServices(0, 5);
+        queryServices(0, 20);
     });
 
-    $("#save").click(function () {
-        $("#loading").show();
-        var resourceIds = [];
-        $('input[name="resourceIds"]:checked').each(function () {
-            var newPermissionDto = {
-                resourceId: $(this).val()
-            }
-            resourceIds.push(newPermissionDto);
-        });
-        var reqData = {
-            requestId: new Date().getTime(),
-            data: resourceIds
-        }
-        var dataJson = JSON.stringify(reqData);
-        $.ajax({
-            type: "POST",
-            url: "http://www.micro.com/permission/service/permissions",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
-            },
-            data: dataJson,
-            dataType: 'json',
-            success: function (data) {
-                $("#success").hide();
-                $("#fail").hide();
-                if (data.success == true) {
-                    $("#success").html(data.errorMessage);
-                    $("#success").show();
-                } else {
-                    $("#fail").html(data.errorMessage);
-                    $("#fail").show();
-                }
-                $("#loading").hide();
-            }
-        });
-    });
 });
 
 function queryServices(page, size) {
     var code = $("#code").val();
     var method = $("#method").val();
     var isAudit = $("#isAudit").val();
-    var url = 'http://www.micro.com/permission/service/services';
+    var module = $("#module").val();
+    var url =  '/management/service/services';
     if (page != null && page != undefined) {
         url += "?page=" + page;
     }
@@ -125,13 +45,19 @@ function queryServices(page, size) {
     if (isAudit != null && isAudit != undefined && isAudit != "") {
         url += "&isAudit=" + isAudit;
     }
+    if (module != null && module != undefined && module != "") {
+        url += "&module=" + module;
+    }
     $.ajax({
         type: "GET",
-        // url: "http://www.micro.com/permission/service/services?page=" + page + "&size=" + size + "&code=" + code + "&method=" + method + "&isAudit=" + isAudit,
         url: url,
         beforeSend: function (xhr) {
             xhr.setRequestHeader("Accept", "application/json; charset=utf-8");
         },
+        xhrFields: {
+            withCredentials: true
+        },
+        crossDomain: true,
         dataType: 'json',
         success: function (data) {
             $("#success").hide();
@@ -142,16 +68,29 @@ function queryServices(page, size) {
             }
             $("#services").empty();
             $.each(data.data, function (i, item) {
+                var isAudit;
+                if (item.isAudit == 0) {
+                    isAudit = '否';
+                } else {
+                    isAudit = '是';
+                }
                 $("#services").append("<tr>" +
                     "<td>" + item.id + "</td>" +
                     "<td>" + item.code + "</td>" +
-                    "<td>" + item.content + "</td>" +
+                    "<td><a href='#' value='" + item.id + "'>" + item.content + "</a></td>" +
                     "<td>" + item.path + "</td>" +
                     "<td>" + item.method + "</td>" +
-                    "<td>" + item.isAudit + "</td>" +
-                    "<td></td>" +
+                    "<td>" + isAudit + "</td>" +
+                    "<td>" + item.module + "</td>" +
                     "</tr>");
             })
+            //编辑链接逻辑
+            $('table td a').click(function () {
+                var id = $(this).attr('value');
+                $.cookie("service-edit-id", id);
+                location.href = 'edit.html';
+            });
+            //分页
             $("#pages").empty();
             var begin = data.currentPage - 2;
             var end = data.currentPage + 2;

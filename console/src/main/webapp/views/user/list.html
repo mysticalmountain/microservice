@@ -4,18 +4,12 @@
     <meta charset="utf-8">
     <title>用户查询</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <link rel="stylesheet" href="../../resources/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <link rel="stylesheet" href="../../resources/dist/css/AdminLTE.min.css">
-    <link rel="stylesheet" href="../../resources/dist/css/skins/_all-skins.min.css">
-    <link rel="stylesheet" href="../..//resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../resources/bootstrap/extend/css/util.css">
-
-    <!--<script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>-->
-    <!--<script src="/resources/bootstrap/js/bootstrap.min.js"></script>-->
-    <!--<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>-->
-    <script src="/resources/c/user/list.js"></script>
+    <link rel="stylesheet" href="/resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/resources/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -41,36 +35,50 @@
         <section class="content">
             <div class="row">
                 <div class="box">
+                    <div class="box-header with-border pull-right">
+                        <div class="col-xs-3">
+                            <input type="text" class="form-control" id="orgName" placeholder="机构">
+                            <input type="hidden" class="form-control" id="orgId">
+                        </div>
+                        <div class="col-xs-3">
+                            <div class="input-group-btn">
+                                <button id="search" type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <button id="new" type="button" class="btn btn-primary">新建</button>
+                        </div>
+                    </div>
                     <div class="box-body">
                         <table class="table table-bordered">
+                            <thead>
                             <tr>
-                                <th style="width: 10px">#</th>
+                                <th style="width: 10px">ID</th>
                                 <th>姓名</th>
                                 <th>用户名</th>
-                                <th style="width: 40px">Label</th>
+                                <th style="width: 40px">#</th>
                             </tr>
+                            </thead>
+                            <tbody id="users"></tbody>
                         </table>
-                    </div>
-                    <div class="box-footer clearfix">
-                        <ul class="pagination pagination-sm no-margin pull-right">
-                            <li><a href="#">&laquo;</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>
         </section>
     </div>
+    <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+        <ul id="treeDemo" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+    </div>
     <footer id="footer" class="main-footer"></footer>
 </div>
 
-<script src="../../resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="../../resources/bootstrap/js/bootstrap.min.js"></script>
-<script src="../../resources/plugins/fastclick/fastclick.js"></script>
-<script src="../../resources/dist/js/app.min.js"></script>
-<script src="../../resources/c/index.js"></script>
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/plugins/fastclick/fastclick.js"></script>
+<script src="/resources/dist/js/app.min.js"></script>
+<script src="/resources/c/user/list.js"></script>
+<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.excheck.js"></script>
 </body>
 </html>

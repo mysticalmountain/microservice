@@ -2,92 +2,133 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>编辑用户</title>
+    <title>用户查询</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/resources/bootstrap/extend/css/util.css">
-    <script src="/resources/bootstrap/extend/js/jquery-3.1.1.min.js"></script>
-    <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
-    <script src="/resources/c/user/edit.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="/resources/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/resources/ztree/css/zTreeStyle/zTreeStyle.css" type="text/css">
 </head>
-<body>
-<nav id="navbar" class="navbar navbar-default" role="navigation">
-</nav>
-<ol class="breadcrumb">
-    <li>系统管理</a></li>
-    <li><a href="list.html">用户管理</a></a></li>
-    <li class="active">编辑用户</li>
-</ol>
-<div id="success" class="alert alert-success" style="display: none;"></div>
-<div id="fail" class="alert alert-danger" style="display: none;"></div>
-<div id="loading" class="loading" style="display: none;">Loading pages...</div>
-<form class="form-horizontal" role="form">
-    <fieldset>
-        <legend>用户信息</legend>
-        <div class="form-group">
-            <label for="name" class="col-sm-2 control-label">姓名</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="name">
+
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+
+    <header id="header" class="main-header"></header>
+    <aside id="sidebar" class="main-sidebar"></aside>
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>
+                &nbsp;
+                <small>&nbsp;</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>系统管理</a></li>
+                <li><a href="#">用户管理</a></li>
+                <li class="active">编辑</li>
+            </ol>
+        </section>
+
+        <section class="content">
+            <div id="success" class="alert alert-success" style="display: none;"></div>
+            <div id="fail" class="alert alert-danger" style="display: none;"></div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">基本信息</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="orgName">机构</label>
+                                <input type="text" class="form-control" id="orgName" readonly>
+                                <input type="hidden" class="form-control" id="orgId">
+                            </div>
+                            <div class="form-group">
+                                <label for="username">用户名</label>
+                                <input type="email" class="form-control" id="username" placeholder="用户名">
+                            </div>
+                            <div class="form-group">
+                                <label for="name">姓名</label>
+                                <input type="text" class="form-control" id="name" placeholder="姓名">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">账户信息</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="accountNo">账号</label>
+                                <input type="text" class="form-control" id="accountNo" placeholder="账号">
+                                <input type="hidden" id="authorityId">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">密码</label>
+                                <input type="password" class="form-control" id="password" placeholder="密码">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">详细介绍</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="form-group">
+                                <input type="hidden" id="profileId">
+                                <label for="sex">性别</label>
+                                <select id="sex" class="form-control">
+                                    <option value="0">男</option>
+                                    <option value="1">女</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="age">年龄</label>
+                                <input type="text" class="form-control" id="age" placeholder="年龄">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">地址</label>
+                                <input type="text" class="form-control" id="address" placeholder="地址">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">角色信息</h3>
+                        </div>
+                    </div>
+                    <div class="box-body">
+                        <div id="roles"></div>
+                    </div>
+                </div>
             </div>
-            <label for="username" class="col-sm-2 control-label">用户名</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="username">
+            <div class="row">
+                <div class="box-footer">
+                    <button type="button" id="save" class="btn btn-primary center-block">保存</button>
+                </div>
             </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>基本信息</legend>
-        <div class="form-group">
-            <input type="hidden" id="profileId" />
-            <label class="col-sm-2 control-label" for="sex">性别</label>
-            <div class="col-sm-4">
-                <select id="sex" class="form-control">
-                    <option>请选择</option>
-                    <option value="0">男</option>
-                    <option value="1">女</option>
-                </select>
-            </div>
-            <label for="age" class="col-sm-2 control-label">年龄</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="age">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="address" class="col-sm-2 control-label">地址</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="address">
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>账户信息</legend>
-        <div class="form-group">
-            <input type="hidden" id="authorityId" />
-            <label for="accountNo" class="col-sm-2 control-label">登录帐号</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="accountNo">
-            </div>
-            <label for="password" class="col-sm-2 control-label">密码</label>
-            <div class="col-sm-4">
-                <input type="text" class="form-control" id="password">
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
-        <legend>角色信息</legend>
-        <div class="form-group">
-            <input type="hidden" id="roleId" />
-            <label for="accountNo" class="col-sm-2 control-label">角色</label>
-            <div id="roles" class="col-sm-10">
-            </div>
-        </div>
-    </fieldset>
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button id="save" type="button" class="btn btn-default">保存</button>
-        </div>
+        </section>
     </div>
-</form>
-<div id="footer"></div>
+    <div id="menuContent" class="menuContent" style="display:none; position: absolute;">
+        <ul id="treeDemo" class="ztree" style="margin-top:0; width:180px; height: 300px;"></ul>
+    </div>
+    <footer id="footer" class="main-footer"></footer>
+</div>
+
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+<script src="/resources/plugins/fastclick/fastclick.js"></script>
+<script src="/resources/dist/js/app.min.js"></script>
+<script src="/resources/c/user/edit.js"></script>
+<script src="/resources/bootstrap/extend/js/jquery.cookie.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="/resources/ztree/js/jquery.ztree.excheck.js"></script>
 </body>
 </html>
