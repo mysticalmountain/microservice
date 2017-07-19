@@ -8,23 +8,15 @@ import java.io.Serializable;
  * Created by andongxu on 16-12-12.
  */
 public class Request<T> implements Serializable {
-//    @NotNull(message = "不允许为空")
-    private String serviceId;
+
     @NotNull(message = "不允许为空")
     private String requestId;
 
-    private String uri;
+    @NotNull(message = "不允许为空")
+    private String channelId;
 
     @Valid
     private T data;
-
-    public String getServiceId() {
-        return serviceId;
-    }
-
-    public void setServiceId(String serviceId) {
-        this.serviceId = serviceId;
-    }
 
     public String getRequestId() {
         return requestId;
@@ -38,15 +30,15 @@ public class Request<T> implements Serializable {
         return data;
     }
 
-    public String getUri() {
-        return uri;
-    }
-
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
     public void setData(T data) {
         this.data = data;
+    }
+
+    public String getChannelId() {
+        return channelId;
+    }
+
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
     }
 }
