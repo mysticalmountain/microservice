@@ -9,18 +9,6 @@ import java.util.Set;
  */
 public class EditUserDto implements Serializable{
 
-//    private Long id;
-
-//    @NotNull(message = "不允许为空")
-//    @Pattern(regexp = "(\\w|[\\u4E00-\\u9FA5]){1,32}", message = "格式:(\\w|[\\u4E00-\\u9FA5]){1,5}")
-//    private String name;
-
-//    @NotNull(message = "不允许为空")
-//    private String username;
-
-//    @NotNull(message = "不允许为空")
-//    private UserType userType;
-
     @Valid
     private UserDto userDto;
 

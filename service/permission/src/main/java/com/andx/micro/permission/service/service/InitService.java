@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
  * Created by andongxu on 17-5-3.
  */
 @Component
-@Service(path = "/services/init", code = "initService", method = MethodType.POST, name = "初始化基础数据（服务）", module = "权限")
+@Service(path = "/service/init", code = "initService", method = MethodType.POST, name = "初始化基础数据（服务）", module = "permission")
 public class InitService extends PostSampleService<Request<ServiceDto>, Response> {
 
     @Autowired

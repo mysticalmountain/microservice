@@ -25,9 +25,6 @@ public class PermissionValidatorProcessor implements ValidatorProcessor<Permissi
     @Qualifier("channelValidateHandler")
     private ServiceHandler<PermissionValidatorDto, Boolean> channelValidateHandler;
     @Autowired
-    @Qualifier("roleValidateHandler")
-    private ServiceHandler<PermissionValidatorDto, Boolean> roleValidateHandler;
-    @Autowired
     @Qualifier("servicePermissionExistsHandler")
     private ServiceHandler<String, Boolean> serviceValidateHandler;
 
@@ -36,22 +33,15 @@ public class PermissionValidatorProcessor implements ValidatorProcessor<Permissi
         try {
             String serviceCode = dto.getServiceCode();
             Boolean hasPermission = false;
+            hasPermission = serviceValidateHandler.handle(serviceCode, null);
+            if (hasPermission == false) {       //服务无权限控制
+                return true;
+            }
+            hasPermission = false;
+            //验证渠道是否有权访问服务
             Boolean permissionExists = serviceValidateHandler.handle(serviceCode, null);
             if (permissionExists) {
-                HttpServletRequest httpServletRequest = (HttpServletRequest) args[0];
-                List<Long> roleIds = (List<Long>) httpServletRequest.getSession().getAttribute("roleIds");
-                for (Long roleId : roleIds) {
-                    PermissionValidatorDto permissionValidatorDto = new PermissionValidatorDto();
-                    permissionValidatorDto.setServiceCode(serviceCode);
-                    permissionValidatorDto.setOwnerId(String.valueOf(roleId));
-                    hasPermission = channelValidateHandler.handle(permissionValidatorDto, null);
-                    if (hasPermission == null || hasPermission == false) {
-                        hasPermission = roleValidateHandler.handle(permissionValidatorDto, null);
-                    }
-                    if (hasPermission != null && hasPermission == true) {
-                        break;
-                    }
-                }
+                hasPermission = channelValidateHandler.handle(dto, null);
                 return hasPermission == null ? false : hasPermission;
             } else {
                 return true;

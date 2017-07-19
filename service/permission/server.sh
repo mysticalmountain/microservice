@@ -21,7 +21,7 @@ pid=-1
 start() {
     pid=`ps -ef | grep $APP_HOME | grep -v grep | awk '{print $2}'`
     if [ -z $pid ]; then
-        java -cp $CLASSPATH $JAVA_OPTS com.andx.micro.permission.PermissionApp   >> config.log 2>&1 &
+        java -cp $CLASSPATH $JAVA_OPTS com.andx.micro.permission.PermissionApp   >> logs/output.log 2>&1 &
         echo $!>$PIDFILE
         echo "running pid: $!"
     else

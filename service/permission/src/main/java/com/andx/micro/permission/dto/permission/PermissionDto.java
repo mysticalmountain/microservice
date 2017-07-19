@@ -1,5 +1,7 @@
 package com.andx.micro.permission.dto.permission;
 
+import com.andx.micro.permission.model.Operate;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,8 @@ public class PermissionDto implements Serializable {
 
     private ResourceDto resourceDto;
 
+    private Operate operate;
+
     public Long getId() {
         return id;
     }
@@ -21,6 +25,14 @@ public class PermissionDto implements Serializable {
 
     public ResourceDto getResourceDto() {
         return resourceDto;
+    }
+
+    public Operate getOperate() {
+        return operate;
+    }
+
+    public void setOperate(Operate operate) {
+        this.operate = operate;
     }
 
     public void setResourceDto(ResourceDto resourceDto) {

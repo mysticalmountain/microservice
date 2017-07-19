@@ -18,6 +18,8 @@ public class Permission extends BaseEntity {
     @JoinColumn(name = "resource_id")
     private Resource resource;
 
+    @Column(length = 8)
+    @Enumerated(EnumType.STRING)
     private Operate operate;
 
     @ManyToMany(mappedBy = "permissions")

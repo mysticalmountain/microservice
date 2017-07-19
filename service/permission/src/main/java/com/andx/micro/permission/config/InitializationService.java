@@ -91,7 +91,7 @@ public class InitializationService implements InitializationProjec<Void> {
             }
             log.info("初始化服务完成...");
         } catch (Exception e) {
-            log.error("初始化服错误, service code [" + service.code() + "], ");
+            log.error("初始化服错误, service code [" + service.code() + "], ", e);
         }
     }
 }

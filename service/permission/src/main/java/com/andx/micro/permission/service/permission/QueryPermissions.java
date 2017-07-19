@@ -15,6 +15,8 @@ import com.andx.micro.permission.repository.PermissionRepository;
 import com.andx.micro.permission.repository.ServiceRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -23,8 +25,8 @@ import java.util.*;
  * Created by andongxu on 17-5-4.
  */
 @Component
-@Service(path = "/permissions", code = "queryPermission", name = "查询权限", module = "权限")
-public class QueryPermissions extends GetSampleService<Response<Set<PermissionDto>>> {
+@Service(path = "/permissions", code = "queryPermission", name = "查询权限", module = "permission")
+public class QueryPermissions extends GetSampleService<Response<List<PermissionDto>>> {
 
     @Autowired
     private PermissionRepository permissionRepository;
@@ -32,27 +34,32 @@ public class QueryPermissions extends GetSampleService<Response<Set<PermissionDt
     private ServiceRepository serviceRepository;
 
     @Override
-    protected Response<Set<PermissionDto>> doService(Map<String, String[]> prams, String path) throws ServiceException {
-        List<Permission> permissions = permissionRepository.findAll();
-        Iterator<Permission> permissionIterator = permissions.iterator();
-        Set<PermissionDto> permissionDtos = new HashSet<>();
-        while (permissionIterator.hasNext()) {
-            Permission permission = permissionIterator.next();
-            PermissionDto permissionDto = new PermissionDto();
-            BeanUtils.copyProperties(permission, permissionDto);
-            Resource resource = permission.getResource();
-            ResourceDto resourceDto = new ResourceDto();
-            permissionDto.setResourceDto(resourceDto);
-            BeanUtils.copyProperties(resource, resourceDto);
-            if (ResourceType.SERVICE == resource.getResourceType()) {
-                com.andx.micro.permission.model.Service service = serviceRepository.findByResource(resource);
+    protected Response<List<PermissionDto>> doService(Map<String, String> prams, String path) throws ServiceException {
+        String code = prams.get("code") != null ? prams.get("code") : null;
+        String name = prams.get("name") != null ? prams.get("name") : null;
+        com.andx.micro.permission.model.Service qs = new com.andx.micro.permission.model.Service();
+        qs.setCode(code);
+        qs.setContent(name);
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher("code", matcher -> matcher.contains()).withMatcher("content", matcher -> matcher.contains());
+        Example<com.andx.micro.permission.model.Service> example = Example.of(qs, exampleMatcher);
+        List<com.andx.micro.permission.model.Service> services = serviceRepository.findAll(example);
+        List<PermissionDto> permissionDtos = new ArrayList<>();
+        for (com.andx.micro.permission.model.Service service : services) {
+            Resource resource = service.getResource();
+            Permission permission = permissionRepository.findByResource(resource);
+            if (permission != null) {
+                PermissionDto permissionDto = new PermissionDto();
+                BeanUtils.copyProperties(permission, permissionDto);
+                ResourceDto resourceDto = new ResourceDto();
+                permissionDto.setResourceDto(resourceDto);
+                BeanUtils.copyProperties(resource, resourceDto);
                 ServiceDto serviceDto = new ServiceDto();
                 BeanUtils.copyProperties(service, serviceDto);
                 resourceDto.setServiceDto(serviceDto);
+                permissionDtos.add(permissionDto);
             }
-            permissionDtos.add(permissionDto);
         }
-        Response response = Constant.RESPONSE_SUCCESS.clone();
+        Response response = new Response(Constant.MSG_SUCCESS, true);
         response.setData(permissionDtos);
         return response;
     }

@@ -26,35 +26,22 @@ import java.util.Set;
 public class PermissionValidatorProcessor implements ValidatorProcessor<PermissionValidatorDto, Boolean> {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private LoadBalancerClient loadBalancer;
-    @Autowired
     private PermissionClient permissionClient;
-
-    @Autowired
-    private RestTemplate restTemplate;
 
     @Override
     public Boolean process(PermissionValidatorDto permissionValidatorDto, Object... args) throws ValidatorException {
-//        URI uri = loadBalancer.choose("permission").getUri();
-//        Response<Boolean> noPermission = restTemplate.getForObject(String.format("http://%s:%d/service/services/%s/noPermission", "permission", uri.getPort(), permissionValidatorDto.getServiceCode()), Response.class);
-        Response<Boolean> noPermission = permissionClient.getServices_NoPermission(permissionValidatorDto.getServiceCode());
-//        Response<Boolean> noPermission = restTemplate.getForObject(String.format("http://www.micro.com/permission/service/services/%s/noPermission", permissionValidatorDto.getServiceCode()), Response.class);
-//        if (noPermission.getSuccess() == true && noPermission.getData() == true) {
-        if (true) {
-            return true;
-        }
-        User user = userRepository.findOne(Long.valueOf(permissionValidatorDto.getOwnerId()));
-        Set<Rolebak> roles = user.getRoles();
-        Iterator<Rolebak> rolebakIterator = roles.iterator();
-        while (rolebakIterator.hasNext()) {
-            Rolebak rolebak = rolebakIterator.next();
-            Response response = restTemplate.getForObject("http://www.micro.com/permission/service/owners/" + rolebak.getRoleId() + "/resources/" + permissionValidatorDto.getServiceCode(), Response.class);
-            if (response.getSuccess() == true) {
+        Response<Boolean> noPermission = permissionClient.getServiceNoPermission(permissionValidatorDto.getServiceCode(), permissionValidatorDto.getOwnerId(), permissionValidatorDto.getRequestId());
+        if (noPermission.getSuccess() == true) {
+            if (noPermission.getData() == true) {
                 return true;
             }
         }
-        return false;
+
+        Response res = permissionClient.queryOwnerResource(permissionValidatorDto.getOwnerId(), permissionValidatorDto.getServiceCode(), permissionValidatorDto.getOwnerId(), permissionValidatorDto.getRequestId());
+        if (res.getSuccess() == true) {
+            return true;
+        } else {
+            throw new ValidatorException(String.format("渠道 [%s] 无权访问服务 [%s]", permissionValidatorDto.getOwnerId(), permissionValidatorDto.getServiceCode()));
+        }
     }
 }

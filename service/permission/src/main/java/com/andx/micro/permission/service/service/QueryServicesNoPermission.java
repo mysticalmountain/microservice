@@ -16,17 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by andongxu on 17-4-17.
  */
 @Component
-@com.andx.micro.api.core.Service(path = "/services/noPermission", code = "queryServicesNoPermission", name = "查询未设置权限的服务", module = "权限")
-public class QueryServicesNoPermission extends GetSampleService<Response<Set<ServiceDto>>> {
+@com.andx.micro.api.core.Service(path = "/services/noPermission", code = "queryServicesNoPermission", name = "查询未分配权限的服务", module = "permission")
+public class QueryServicesNoPermission extends GetSampleService<Response<List<ServiceDto>>> {
 
     @Autowired
     private ServiceRepository serviceRepository;
@@ -34,14 +31,12 @@ public class QueryServicesNoPermission extends GetSampleService<Response<Set<Ser
     private PermissionRepository permissionRepository;
 
     @Override
-    public Response<Set<ServiceDto>> doService(Map<String, String[]> stringMap, String path) throws ServiceException {
-        List<Service> services = serviceRepository.findAll(new Sort(new Sort.Order(Sort.Direction.DESC, "id")));
+    public Response<List<ServiceDto>> doService(Map<String, String> stringMap, String path) throws ServiceException {
+        List<Service> services = serviceRepository.findAll();
         List<Permission> permissions = permissionRepository.findAll();
 
-
-        Set<ServiceDto> serviceDtos = new HashSet<>();
+        List<ServiceDto> serviceDtos = new ArrayList<>();
         for (Service service : services) {
-
             boolean exists = false;
             for (Permission permission : permissions) {
                 Long resourceId = permission.getResource().getId();

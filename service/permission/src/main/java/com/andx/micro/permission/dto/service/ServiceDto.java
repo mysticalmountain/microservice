@@ -18,13 +18,13 @@ public class ServiceDto implements Serializable {
 
     private String content;
 
-    private String system;
-
     private String module;
+
+    private String system;
 
     private MethodType method;
 
-    private int isAudit;
+    private Integer isAudit;
 
     private ResourceDto resourceDto;
 
@@ -92,7 +92,7 @@ public class ServiceDto implements Serializable {
         return isAudit;
     }
 
-    public void setIsAudit(int isAudit) {
+    public void setIsAudit(Integer isAudit) {
         this.isAudit = isAudit;
     }
 

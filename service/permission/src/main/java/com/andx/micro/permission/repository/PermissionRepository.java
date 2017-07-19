@@ -1,5 +1,6 @@
 package com.andx.micro.permission.repository;
 
+import com.andx.micro.permission.model.Operate;
 import com.andx.micro.permission.model.Permission;
 import com.andx.micro.permission.model.Resource;
 import com.andx.micro.permission.model.Role;
@@ -17,4 +18,6 @@ public interface PermissionRepository extends JpaRepository<Permission, Long> {
     public Set<Permission> findByRoles(Role role);
 
     public Permission findByResource(Resource resource);
+
+    public Permission findByResourceAndOperate(Resource resource, Operate operate);
 }

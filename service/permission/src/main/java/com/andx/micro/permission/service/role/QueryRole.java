@@ -18,14 +18,14 @@ import java.util.Map;
  * Created by andongxu on 17-4-19.
  */
 @Component
-@Service(path = "/roles/\\w+", code = "queryRole", name = "按ID查询角色", module = "权限")
+@Service(path = "/role/\\w+", code = "queryRole", name = "按ID查询角色", module = "permission")
 public class QueryRole extends GetSampleService<Response<RoleDto>> {
 
     @Autowired
     private RoleRepository roleRepository;
 
     @Override
-    protected Response<RoleDto> doService(Map<String, String[]> prams, String path) throws ServiceException {
+    protected Response<RoleDto> doService(Map<String, String> prams, String path) throws ServiceException {
         String roleId = path.substring(path.lastIndexOf("/") + 1, path.length());
         Role role = roleRepository.findOne(Long.valueOf(roleId));
         RoleDto roleDto = new RoleDto();

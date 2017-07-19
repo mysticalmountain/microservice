@@ -1,6 +1,7 @@
 package com.andx.micro.user.config;
 
 import com.andx.micro.api.core.InitializationProjec;
+import com.andx.micro.api.core.MethodType;
 import com.andx.micro.api.core.Service;
 import com.andx.micro.api.core.dto.Request;
 import com.andx.micro.api.core.dto.Response;
@@ -9,6 +10,7 @@ import com.andx.micro.api.core.module.service.SampleService;
 import com.andx.micro.api.log.Log;
 import com.andx.micro.core.log.slf4j.Slf4jLogFactory;
 import com.andx.micro.core.util.AopTargetUtils;
+import com.andx.micro.user.client.PermissionClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
 import org.springframework.stereotype.Component;
@@ -23,18 +25,13 @@ import java.util.List;
 public class InitializationService implements InitializationProjec<Void> {
 
     private Log log = Slf4jLogFactory.getLogFactory().getLog(this.getClass());
-    @Autowired
-    private RestTemplate restTemplate;
+
     @Autowired
     private List<SampleService> sampleServices;
     @Autowired
     private List<ComplexService> complexServices;
-    //    @Autowired
-//    private InitServiceClient initServiceClient;
-//    @Autowired
-//    private LoadBalancerClient loadBalancer;
-
-    private String uri = "http://www.micro.com/permission/service/services/init";
+    @Autowired
+    private PermissionClient permissionClient;
 
 
     @Override
@@ -49,25 +46,21 @@ public class InitializationService implements InitializationProjec<Void> {
                         service = AopTargetUtils.getTarget(sampleService).getClass().getAnnotation(Service.class);
                     }
                     Request request = new Request();
+                    request.setChannelId(Constant.MODULE);
                     ServiceDto serviceDto = new ServiceDto();
                     serviceDto.setPath(service.path());
                     serviceDto.setContent(service.name());
                     serviceDto.setCode(service.code());
                     serviceDto.setModule(service.module());
                     serviceDto.setSystem(service.system());
-                    serviceDto.setMethod(service.method());
-                    request.setData(serviceDto);
-//                    ServiceInstance serviceInstance = loadBalancer.choose("permission-service");
-//                    URI u = serviceInstance.getUri();
-                    Response response = restTemplate.postForObject(uri, request, Response.class);
-                    System.out.println(response);
-                    try {
-
-//                        initServiceClient.serviceInit(request);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-
+                    if (service.method() == null) {
+                        serviceDto.setMethod(MethodType.GET);
+                    } else {
+                        serviceDto.setMethod(service.method());
                     }
+                    request.setData(serviceDto);
+                    Response response = permissionClient.initSevice(request);
+                    System.out.println(response);
                 }
             }
 
@@ -78,6 +71,7 @@ public class InitializationService implements InitializationProjec<Void> {
                         service = AopTargetUtils.getTarget(complexService).getClass().getAnnotation(Service.class);
                     }
                     Request request = new Request();
+                    request.setChannelId(Constant.MODULE);
                     ServiceDto serviceDto = new ServiceDto();
                     serviceDto.setPath(service.path());
                     serviceDto.setContent(service.name());
@@ -85,8 +79,7 @@ public class InitializationService implements InitializationProjec<Void> {
                     serviceDto.setModule(service.module());
                     serviceDto.setSystem(service.system());
                     request.setData(serviceDto);
-//                    Response response = initServiceClient.serviceInit(request);
-                    Response response = restTemplate.postForObject(uri, request, Response.class);
+                    Response response = permissionClient.initSevice(request);
                 }
             }
             log.info("初始化服务完成...");

@@ -18,6 +18,8 @@ public interface ServiceRepository extends JpaRepository<Service, Long> {
 
     public Service findByResource(Resource resource);
 
+    public Service findByModuleAndPath(String module, String path);
+
     @Query(value = "select * from service s where s.isAudit = 0 order by created_time desc limit ?1, ?2", nativeQuery = true)
     public List<Service> findService(int start, int count);
 }

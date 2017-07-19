@@ -21,6 +21,9 @@ public class UserDto implements Serializable{
     private String username;
 
     @NotNull(message = "不允许为空")
+    private String orgId;
+
+    @NotNull(message = "不允许为空")
     private UserType userType;
 
     public Long getId() {
@@ -55,68 +58,11 @@ public class UserDto implements Serializable{
         this.userType = userType;
     }
 
-    //    @Valid
-//    private ProfileDto profileDto;
+    public String getOrgId() {
+        return orgId;
+    }
 
-//    @Valid
-//    private AuthorityDto authorityDto;
-
-//    @Valid
-//    private Set<RolebakDto> roleDtos;
-
-//    public Long getId() {
-//        return id;
-//    }
-
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
-
-//    public String getName() {
-//        return name;
-//    }
-
-//    public void setName(String name) {
-//        this.name = name;
-//    }
-
-//    public String getUsername() {
-//        return username;
-//    }
-
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
-
-//    public UserType getUserType() {
-//        return userType;
-//    }
-
-//    public void setUserType(UserType userType) {
-//        this.userType = userType;
-//    }
-
-//    public ProfileDto getProfileDto() {
-//        return profileDto;
-//    }
-
-//    public void setProfileDto(ProfileDto profileDto) {
-//        this.profileDto = profileDto;
-//    }
-
-//    public AuthorityDto getAuthorityDto() {
-//        return authorityDto;
-//    }
-
-//    public void setAuthorityDto(AuthorityDto authorityDto) {
-//        this.authorityDto = authorityDto;
-//    }
-
-//    public Set<RolebakDto> getRoleDtos() {
-//        return roleDtos;
-//    }
-
-//    public void setRoleDtos(Set<RolebakDto> roleDtos) {
-//        this.roleDtos = roleDtos;
-//    }
+    public void setOrgId(String orgId) {
+        this.orgId = orgId;
+    }
 }

@@ -8,6 +8,8 @@ import com.andx.micro.permission.model.Service;
 import com.netflix.discovery.converters.Auto;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 
 import java.util.List;
 
@@ -24,12 +26,13 @@ public class ServiceRepositoryTest extends BaseTest {
     @Test
     public void queryService() {
         List<Service> services = serviceRepository.findService(3, 3);
-        for (Service service : services)  {
+        for (Service service : services) {
             System.out.println(service);
         }
     }
 
-    @Test public void save() {
+    @Test
+    public void save() {
         Resource resource = new Resource();
         resource.setResourceType(ResourceType.SERVICE);
         resourceRepository.save(resource);
@@ -40,5 +43,18 @@ public class ServiceRepositoryTest extends BaseTest {
         service.setResource(resource);
         service.setContent("103");
         serviceRepository.save(service);
+    }
+
+    @Test
+    public void query2() {
+        com.andx.micro.permission.model.Service qs = new com.andx.micro.permission.model.Service();
+        qs.setCode("n");
+        qs.setContent("角色");
+        ExampleMatcher exampleMatcher = ExampleMatcher.matching().withMatcher("code", matcher -> matcher.contains()).withMatcher("content", matcher -> matcher.contains());
+        Example<Service> example = Example.of(qs, exampleMatcher);
+        List<com.andx.micro.permission.model.Service> services = serviceRepository.findAll(example);
+        for (Service service : services) {
+            System.out.println(service.getCode() + "\t" + service.getContent());
+        }
     }
 }

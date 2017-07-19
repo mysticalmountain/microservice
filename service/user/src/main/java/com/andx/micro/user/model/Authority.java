@@ -21,7 +21,7 @@ public class Authority extends BaseEntity {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @Column(nullable = false, length = 1)
+    @Column(nullable = false, length = 8)
     @Enumerated(EnumType.STRING)
     private AuthType authType;
 

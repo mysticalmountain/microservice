@@ -38,7 +38,7 @@ public class ChannelValidateHandler extends GenericServiceHandler<PermissionVali
         if (permissionValidatorDto.getOwnerId() == null) {
             return false;
         }
-        Channel channel = channelRepository.findOne(Long.valueOf(permissionValidatorDto.getOwnerId()));
+        Channel channel = channelRepository.findByCode(permissionValidatorDto.getOwnerId());
         return channel != null;
     }
 }

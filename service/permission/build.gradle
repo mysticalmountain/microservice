@@ -13,6 +13,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-eureka-server:${springEurekaVersion}")
     compile("org.springframework.cloud:spring-cloud-starter-config:${springCloudVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-feign:${springCloudVersion}")
 
     compile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
 }

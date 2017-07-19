@@ -37,6 +37,10 @@ public class User extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Rolebak> roles;
 
+    @ManyToOne(targetEntity = Org.class)
+    @JoinColumn(name = "org_id", referencedColumnName = "id")
+    private Org org;
+
     public String getName() {
         return name;
     }
@@ -79,6 +83,14 @@ public class User extends BaseEntity {
 
     public Set<Rolebak> getRoles() {
         return roles;
+    }
+
+    public Org getOrg() {
+        return org;
+    }
+
+    public void setOrg(Org org) {
+        this.org = org;
     }
 
     public void setRoles(Set<Rolebak> roles) {

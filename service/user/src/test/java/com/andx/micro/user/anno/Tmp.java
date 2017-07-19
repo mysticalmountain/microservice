@@ -4,17 +4,17 @@ import com.andx.micro.api.core.Service;
 import org.junit.Before;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.net.URLDecoder;
 
 /**
  * Created by andongxu on 17-6-12.
  */
 @Service
 public class Tmp {
-
-    @Service
-    public void fun1() {
+@Service public void fun1() {
 
     }
 
@@ -28,19 +28,12 @@ public class Tmp {
 
     }
 
-    public static void main(String [] args) {
-        Tmp tmp = new Tmp();
-        Annotation [] annotations = tmp.getClass().getAnnotations();
-        for (Annotation annotation : annotations) {
-            System.out.println(annotation.toString());
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        String s = "123";
+        String [] ss = s.split(",");
+        for (String a : ss) {
+            System.out.println(a);
         }
-        Method [] methods = tmp.getClass().getMethods();
-        for (Method method : methods) {
-            Annotation [] ans = method.getAnnotations();
-            for (Annotation an : ans) {
-                System.out.println("method " + method.getName() + "\t" + an.toString());
-            }
-        }
-        System.out.println(tmp);
+
     }
 }

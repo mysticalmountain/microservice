@@ -1,0 +1,29 @@
+dependencies {
+    compile project(":core:core-log")
+    compile project(":core:core-service")
+    compile project(":core:core-validator")
+    compile project(":core:core-util")
+    compile project(":api:api-core")
+    compile project(":support:jpa")
+    compile project(":support:web")
+    compile project(":support:session")
+    compile("org.springframework:spring-context:${springVersion}")
+    compile("org.springframework:spring-tx:${springVersion}")
+    compile("org.springframework.boot:spring-boot-starter-undertow:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-eureka-server:${springCloudVersion}")
+    compile("org.springframework.cloud:spring-cloud-starter-feign:${springCloudVersion}")
+    compile("com.netflix.hystrix:hystrix-core:1.5.5")
+    compile("org.springframework.cloud:spring-cloud-starter-config:${springCloudVersion}")
+
+    compile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+}
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.andx.micro.user.UserApp',
+                "Class-Path": configurations.compile.collect { it.getName() }.join(' ')
+        )
+    }
+}
+

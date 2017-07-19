@@ -11,7 +11,6 @@ public enum Operate {
     READ,                   //读
     WRITE,                  //写
     EXE,                    //执行
-    COMMIT,                 //提交
     AUDIT;                  //审核
 
 }

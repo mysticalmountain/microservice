@@ -21,15 +21,18 @@ public class Role extends BaseEntity {
     @JoinColumn(name = "parent_id", referencedColumnName = "id")
     private Role parent;
 
-    @OneToMany(targetEntity = Role.class)
-    @JoinColumn(name = "parent_id", referencedColumnName = "id")
-    private Set<Role> sons;
+//    @OneToMany(targetEntity = Role.class)
+//    @JoinColumn(name = "parent_id", referencedColumnName = "id")
+//    private Set<Role> sons;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Role_Permission",
             joinColumns = @JoinColumn(name = "role_id"),
             inverseJoinColumns = @JoinColumn(name = "permission_id"))
     private Set<Permission> permissions;
+
+    @Column(length = 20, name = "org_id")
+    private Long orgId;
 
 
     public String getName() {
@@ -56,11 +59,11 @@ public class Role extends BaseEntity {
         this.parent = parent;
     }
 
-    public Set<Role> getSons() {
-        return sons;
+    public Long getOrgId() {
+        return orgId;
     }
 
-    public void setSons(Set<Role> sons) {
-        this.sons = sons;
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
     }
 }

@@ -1,0 +1,8 @@
+2017-06-15 15:57:23 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-15 15:57:33 [ Thread-4:10056 ] - [ INFO ] {dataSource-1} closed
+2017-06-15 15:58:30 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-15 15:58:39 [ Thread-4:8815 ] - [ INFO ] {dataSource-1} closed
+2017-06-15 15:59:33 [ main:1 ] - [ INFO ] {dataSource-1} inited
+2017-06-15 15:59:42 [ Thread-4:8898 ] - [ INFO ] {dataSource-1} closed
+2017-06-15 16:00:16 [ main:0 ] - [ INFO ] {dataSource-1} inited
+2017-06-15 16:00:25 [ Thread-4:9252 ] - [ INFO ] {dataSource-1} closed
