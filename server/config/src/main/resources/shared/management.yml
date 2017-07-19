@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8083
 spring:
   datasource:
     driverClassName: com.mysql.jdbc.Driver
@@ -25,6 +25,4 @@ jpa:
     hibernate:
       dialect: org.hibernate.dialect.MySQL5Dialect
 
-jpa.entity.package: com.andx.micro.user.model,com.andx.micro.core.idempotent.model
-
-session.filter.enable: false
+session.filter.enable: true

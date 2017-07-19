@@ -14,3 +14,16 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka/
     registryFetchIntervalSeconds: 5
 
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
+    multipart:
+      max-file-size: 20Mb
+      max-request-size: 20Mb
+
+server:
+  tomcat:
+    uri-encoding: UTF-8
